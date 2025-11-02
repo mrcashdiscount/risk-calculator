@@ -8,222 +8,230 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #EF4444; /* Red 500 */
+            --primary-color: #00BFA5; /* Emerald Accent */
+            --primary-color-dark: #1DE9B6; /* Teal Accent */
+            --base-dark: #0A192F; /* Deep Navy */
+            --card-bg: #2C3E50; /* Charcoal */
         }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f7f7f9;
+            background-color: var(--base-dark); /* Deep Navy Background */
         }
+        /* Style for the active step in the progress bar */
         .step-indicator.active {
             background-color: var(--primary-color);
             border-color: var(--primary-color);
-            color: white;
+            color: var(--base-dark); /* Dark text on bright accent */
         }
+        /* Style for selected radio buttons */
         .input-radio:checked + label {
             border-color: var(--primary-color);
-            background-color: #FEF2F2; /* Red 50 */
-            color: #EF4444;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            background-color: var(--card-bg);
+            color: var(--primary-color-dark);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
         }
+        /* Primary button styling */
         .btn-primary {
             background-color: var(--primary-color);
             transition: background-color 0.2s;
         }
         .btn-primary:hover {
-            background-color: #DC2626; /* Red 600 */
+            background-color: var(--primary-color-dark);
         }
+        /* Custom shadow for score display */
         .shadow-custom {
-            box-shadow: 0 20px 25px -5px rgba(239, 68, 68, 0.1), 0 8px 10px -6px rgba(239, 68, 68, 0.1);
+            box-shadow: 0 20px 25px -5px rgba(0, 191, 165, 0.2), 0 8px 10px -6px rgba(0, 191, 165, 0.1);
+        }
+        /* Style for the new error message box */
+        #errorMessage {
+            transition: opacity 0.3s ease-in-out;
         }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
-
-    <div id="app-container" class="w-full max-w-2xl bg-white rounded-xl shadow-2xl shadow-gray-300 p-8 md:p-12 transition-all duration-300">
-
+    <!-- Calculator Container: Charcoal Card -->
+    <div id="app-container" class="w-full max-w-2xl bg-[--card-bg] rounded-xl shadow-2xl shadow-gray-900 p-8 md:p-12 transition-all duration-300">
         <!-- Header / Above the Fold Copy -->
         <header class="text-center mb-10">
-            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 leading-tight">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-white leading-tight">
                 Stop Losing Money to Hidden Fees and Account Holds.
             </h1>
-            <h2 class="mt-3 text-xl font-medium text-gray-600">
+            <h2 class="mt-3 text-xl font-medium text-gray-400">
                 Instantly Calculate Your **Provisional Compliance Score** and Discover Your True High-Risk Processing Rate.
             </h2>
             <p class="mt-6 text-sm text-gray-500 max-w-md mx-auto">6 Questions. Less than 5 minutes.</p>
         </header>
-
         <!-- Progress Indicator -->
         <div id="progress-bar" class="flex justify-between items-center mb-8">
             <!-- Steps will be generated here by JS -->
         </div>
-
         <!-- Calculator Form -->
         <form id="riskForm" class="space-y-6">
+            <!-- NEW: Inline Error Message Box (Teal Accent) -->
+            <div id="errorMessage" class="hidden p-3 bg-gray-700 border border-[--primary-color-dark] text-[--primary-color-dark] rounded-lg font-medium transition-opacity" role="alert">
+                <!-- Error message will be inserted here -->
+            </div>
+           
             <!-- Step 1: Vertical Risk -->
             <div data-step="1" class="step">
-                <h3 class="text-2xl font-bold text-gray-800 mb-6">Question 1/6: Primary Vertical Risk</h3>
-                <p class="text-gray-600 mb-6">Which best describes your primary product or service vertical?</p>
+                <h3 class="text-2xl font-bold text-white mb-6">Question 1/6: Primary Vertical Risk</h3>
+                <p class="text-gray-400 mb-6">Which best describes your primary product or service vertical?</p>
                 <div class="space-y-4">
-                    <input type="radio" id="vape" name="vertical" value="vape" class="hidden input-radio" required>
-                    <label for="vape" class="block p-4 border-2 border-gray-200 rounded-lg cursor-pointer transition duration-200 text-gray-700 font-medium hover:border-red-400">Smoke/Vape/CBD (High Liability)</label>
-
-                    <input type="radio" id="nutra" name="vertical" value="nutra" class="hidden input-radio">
-                    <label for="nutra" class="block p-4 border-2 border-gray-200 rounded-lg cursor-pointer transition duration-200 text-gray-700 font-medium hover:border-red-400">Nutraceuticals/Supplements (High Dispute Risk)</label>
-
-                    <input type="radio" id="subs" name="vertical" value="subs" class="hidden input-radio">
-                    <label for="subs" class="block p-4 border-2 border-gray-200 rounded-lg cursor-pointer transition duration-200 text-gray-700 font-medium hover:border-red-400">Recurring Subscriptions (General)</label>
-                    
-                    <input type="radio" id="debt" name="vertical" value="debt" class="hidden input-radio">
-                    <label for="debt" class="block p-4 border-2 border-gray-200 rounded-lg cursor-pointer transition duration-200 text-gray-700 font-medium hover:border-red-400">Debt Collection/Adult Entertainment (Critical Risk)</label>
-                    
+                    <input type="radio" id="dispensary" name="vertical" value="dispensary" class="hidden input-radio" required>
+                    <label for="dispensary" class="block p-4 border-2 border-gray-600 rounded-lg cursor-pointer transition duration-200 text-gray-300 font-medium hover:border-[--primary-color]">Dispensaries (Cannabis - Critical Liability)</label>
+                    <input type="radio" id="cbd_smoke" name="vertical" value="cbd_smoke" class="hidden input-radio">
+                    <label for="cbd_smoke" class="block p-4 border-2 border-gray-600 rounded-lg cursor-pointer transition duration-200 text-gray-300 font-medium hover:border-[--primary-color]">CBD/Smoke Shops (High Liability)</label>
+                    <input type="radio" id="convenience" name="vertical" value="convenience" class="hidden input-radio">
+                    <label for="convenience" class="block p-4 border-2 border-gray-600 rounded-lg cursor-pointer transition duration-200 text-gray-300 font-medium hover:border-[--primary-color]">Convenience Stores (General Retail)</label>
+                    <input type="radio" id="liquor" name="vertical" value="liquor" class="hidden input-radio">
+                    <label for="liquor" class="block p-4 border-2 border-gray-600 rounded-lg cursor-pointer transition duration-200 text-gray-300 font-medium hover:border-[--primary-color]">Liquor Stores (Age-Restricted Sales)</label>
                     <input type="radio" id="ecomm" name="vertical" value="ecomm" class="hidden input-radio">
-                    <label for="ecomm" class="block p-4 border-2 border-gray-200 rounded-lg cursor-pointer transition duration-200 text-gray-700 font-medium hover:border-red-400">High-Ticket E-commerce/Other (Standard High-Risk)</label>
+                    <label for="ecomm" class="block p-4 border-2 border-gray-600 rounded-lg cursor-pointer transition duration-200 text-gray-300 font-medium hover:border-[--primary-color]">High-Ticket E-commerce/Other (Standard High-Risk)</label>
                 </div>
             </div>
-
             <!-- Step 2: Processing Volume -->
             <div data-step="2" class="step hidden">
-                <h3 class="text-2xl font-bold text-gray-800 mb-6">Question 2/6: Processing Volume</h3>
-                <p class="text-gray-600 mb-6">What is your estimated average monthly processing volume (USD)?</p>
+                <h3 class="text-2xl font-bold text-white mb-6">Question 2/6: Processing Volume</h3>
+                <p class="text-gray-400 mb-6">What is your estimated average monthly processing volume (USD)?</p>
                 <div class="space-y-4">
                     <input type="radio" id="vol1" name="volume" value="<25k" class="hidden input-radio" required>
-                    <label for="vol1" class="block p-4 border-2 border-gray-200 rounded-lg cursor-pointer transition duration-200 text-gray-700 font-medium hover:border-red-400">< $25K</label>
-                    
+                    <label for="vol1" class="block p-4 border-2 border-gray-600 rounded-lg cursor-pointer transition duration-200 text-gray-300 font-medium hover:border-[--primary-color]">< $25K</label>
                     <input type="radio" id="vol2" name="volume" value="25k-100k" class="hidden input-radio">
-                    <label for="vol2" class="block p-4 border-2 border-gray-200 rounded-lg cursor-pointer transition duration-200 text-gray-700 font-medium hover:border-red-400">$25K - $100K</label>
-                    
+                    <label for="vol2" class="block p-4 border-2 border-gray-600 rounded-lg cursor-pointer transition duration-200 text-gray-300 font-medium hover:border-[--primary-color]">$25K - $100K</label>
                     <input type="radio" id="vol3" name="volume" value="100k-250k" class="hidden input-radio">
-                    <label for="vol3" class="block p-4 border-2 border-gray-200 rounded-lg cursor-pointer transition duration-200 text-gray-700 font-medium hover:border-red-400">$100K - $250K</label>
-                    
+                    <label for="vol3" class="block p-4 border-2 border-gray-600 rounded-lg cursor-pointer transition duration-200 text-gray-300 font-medium hover:border-[--primary-color]">$100K - $250K</label>
                     <input type="radio" id="vol4" name="volume" value=">250k" class="hidden input-radio">
-                    <label for="vol4" class="block p-4 border-2 border-gray-200 rounded-lg cursor-pointer transition duration-200 text-gray-700 font-medium hover:border-red-400">> $250K (High Exposure)</label>
+                    <label for="vol4" class="block p-4 border-2 border-gray-600 rounded-lg cursor-pointer transition duration-200 text-gray-300 font-medium hover:border-[--primary-color]">> $250K (High Exposure)</label>
                 </div>
             </div>
-
             <!-- Step 3: Subscription Percentage -->
             <div data-step="3" class="step hidden">
-                <h3 class="text-2xl font-bold text-gray-800 mb-6">Question 3/6: Subscription Model</h3>
-                <p class="text-gray-600 mb-6">What percentage of your sales are based on a recurring/subscription model?</p>
+                <h3 class="text-2xl font-bold text-white mb-6">Question 3/6: Subscription Model</h3>
+                <p class="text-gray-400 mb-6">What percentage of your sales are based on a recurring/subscription model?</p>
                 <div class="space-y-4">
                     <input type="radio" id="sub0" name="sub_percent" value="0%" class="hidden input-radio" required>
-                    <label for="sub0" class="block p-4 border-2 border-gray-200 rounded-lg cursor-pointer transition duration-200 text-gray-700 font-medium hover:border-red-400">0% (None)</label>
-                    
+                    <label for="sub0" class="block p-4 border-2 border-gray-600 rounded-lg cursor-pointer transition duration-200 text-gray-300 font-medium hover:border-[--primary-color]">0% (None)</label>
                     <input type="radio" id="sub25" name="sub_percent" value="<50%" class="hidden input-radio">
-                    <label for="sub25" class="block p-4 border-2 border-gray-200 rounded-lg cursor-pointer transition duration-200 text-gray-700 font-medium hover:border-red-400">< 50%</label>
-                    
+                    <label for="sub25" class="block p-4 border-2 border-gray-600 rounded-lg cursor-pointer transition duration-200 text-gray-300 font-medium hover:border-[--primary-color]">< 50%</label>
                     <input type="radio" id="sub75" name="sub_percent" value="50-75%" class="hidden input-radio">
-                    <label for="sub75" class="block p-4 border-2 border-gray-200 rounded-lg cursor-pointer transition duration-200 text-gray-700 font-medium hover:border-red-400">50% - 75%</label>
-                    
+                    <label for="sub75" class="block p-4 border-2 border-gray-600 rounded-lg cursor-pointer transition duration-200 text-gray-300 font-medium hover:border-[--primary-color]">50% - 75%</label>
                     <input type="radio" id="sub100" name="sub_percent" value=">75%" class="hidden input-radio">
-                    <label for="sub100" class="block p-4 border-2 border-gray-200 rounded-lg cursor-pointer transition duration-200 text-gray-700 font-medium hover:border-red-400">> 75% (High Liability)</label>
+                    <label for="sub100" class="block p-4 border-2 border-gray-600 rounded-lg cursor-pointer transition duration-200 text-gray-300 font-medium hover:border-[--primary-color]">> 75% (High Liability)</label>
                 </div>
             </div>
-
             <!-- Step 4: ID Verification -->
             <div data-step="4" class="step hidden">
-                <h3 class="text-2xl font-bold text-gray-800 mb-6">Question 4/6: Compliance Check</h3>
-                <p class="text-gray-600 mb-6">Do you currently have compliant Age/Identity Verification (e.g., AVS, third-party ID check) integrated *before* payment on all restricted sales?</p>
+                <h3 class="text-2xl font-bold text-white mb-6">Question 4/6: Compliance Check</h3>
+                <p class="text-gray-400 mb-6">Do you currently have compliant Age/Identity Verification (e.g., AVS, third-party ID check) integrated *before* payment on all restricted sales?</p>
                 <div class="space-y-4">
                     <input type="radio" id="id_yes" name="id_check" value="yes" class="hidden input-radio" required>
-                    <label for="id_yes" class="block p-4 border-2 border-gray-200 rounded-lg cursor-pointer transition duration-200 text-gray-700 font-medium hover:border-red-400">Yes, fully compliant</label>
-                    
+                    <label for="id_yes" class="block p-4 border-2 border-gray-600 rounded-lg cursor-pointer transition duration-200 text-gray-300 font-medium hover:border-[--primary-color]">Yes, fully compliant</label>
                     <input type="radio" id="id_no" name="id_check" value="no" class="hidden input-radio">
-                    <label for="id_no" class="block p-4 border-2 border-gray-200 rounded-lg cursor-pointer transition duration-200 text-gray-700 font-medium hover:border-red-400">No, or only partial coverage (High Gap Risk)</label>
-                    
+                    <label for="id_no" class="block p-4 border-2 border-gray-600 rounded-lg cursor-pointer transition duration-200 text-gray-300 font-medium hover:border-[--primary-color]">No, or only partial coverage (High Gap Risk)</label>
                     <input type="radio" id="id_na" name="id_check" value="na" class="hidden input-radio">
-                    <label for="id_na" class="block p-4 border-2 border-gray-200 rounded-lg cursor-pointer transition duration-200 text-gray-700 font-medium hover:border-red-400">Not Applicable (NA)</label>
+                    <label for="id_na" class="block p-4 border-2 border-gray-600 rounded-lg cursor-pointer transition duration-200 text-gray-300 font-medium hover:border-[--primary-color]">Not Applicable (NA)</label>
                 </div>
             </div>
-
             <!-- Step 5: Chargeback Ratio -->
             <div data-step="5" class="step hidden">
-                <h3 class="text-2xl font-bold text-gray-800 mb-6">Question 5/6: Chargeback Ratio</h3>
-                <p class="text-gray-600 mb-6">What is your current estimated monthly Chargeback Ratio? (Disputes ÷ Total Transactions)</p>
+                <h3 class="text-2xl font-bold text-white mb-6">Question 5/6: Chargeback Ratio</h3>
+                <p class="text-gray-400 mb-6">What is your current estimated monthly Chargeback Ratio? (Disputes ÷ Total Transactions)</p>
                 <div class="space-y-4">
                     <input type="radio" id="cb1" name="cb_ratio" value="<0.5%" class="hidden input-radio" required>
-                    <label for="cb1" class="block p-4 border-2 border-gray-200 rounded-lg cursor-pointer transition duration-200 text-gray-700 font-medium hover:border-red-400">< 0.5% (Stable)</label>
-                    
+                    <label for="cb1" class="block p-4 border-2 border-gray-600 rounded-lg cursor-pointer transition duration-200 text-gray-300 font-medium hover:border-[--primary-color]">< 0.5% (Stable)</label>
                     <input type="radio" id="cb2" name="cb_ratio" value="0.5%-0.9%" class="hidden input-radio">
-                    <label for="cb2" class="block p-4 border-2 border-gray-200 rounded-lg cursor-pointer transition duration-200 text-gray-700 font-medium hover:border-red-400">0.5% - 0.9% (Elevated Risk)</label>
-                    
+                    <label for="cb2" class="block p-4 border-2 border-gray-600 rounded-lg cursor-pointer transition duration-200 text-gray-300 font-medium hover:border-[--primary-color]">0.5% - 0.9% (Elevated Risk)</label>
                     <input type="radio" id="cb3" name="cb_ratio" value="1.0%-1.5%" class="hidden input-radio">
-                    <label for="cb3" class="block p-4 border-2 border-gray-200 rounded-lg cursor-pointer transition duration-200 text-gray-700 font-medium hover:border-red-400">1.0% - 1.5% (Warning Zone - Crisis Imminent)</label>
-                    
+                    <label for="cb3" class="block p-4 border-2 border-gray-600 rounded-lg cursor-pointer transition duration-200 text-gray-300 font-medium hover:border-[--primary-color]">1.0% - 1.5% (Warning Zone - Crisis Imminent)</label>
                     <input type="radio" id="cb4" name="cb_ratio" value=">1.5%" class="hidden input-radio">
-                    <label for="cb4" class="block p-4 border-2 border-gray-200 rounded-lg cursor-pointer transition duration-200 text-gray-700 font-medium hover:border-red-400">> 1.5% (Critical Zone - Immediate Intervention Needed)</label>
+                    <label for="cb4" class="block p-4 border-2 border-gray-600 rounded-lg cursor-pointer transition duration-200 text-gray-300 font-medium hover:border-[--primary-color]">> 1.5% (Critical Zone - Immediate Intervention Needed)</label>
                 </div>
             </div>
-
             <!-- Step 6: AOV & Lead Capture -->
             <div data-step="6" class="step hidden">
-                <h3 class="text-2xl font-bold text-gray-800 mb-6">Question 6/6: Average Order Value & Report Delivery</h3>
-                <p class="text-gray-600 mb-6">What is your estimated Average Dollar Amount Per Transaction (AOV)?</p>
+                <h3 class="text-2xl font-bold text-white mb-6">Question 6/6: Average Order Value & Report Delivery</h3>
+                <p class="text-gray-400 mb-6">What is your estimated Average Dollar Amount Per Transaction (AOV)?</p>
                 <div class="mb-6">
-                    <label for="aov" class="block text-sm font-medium text-gray-700 mb-2">AOV (USD):</label>
-                    <input type="number" id="aov" name="aov" min="1" placeholder="e.g., 75.00" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500" required>
+                    <label for="aov" class="block text-sm font-medium text-gray-300 mb-2">AOV (USD):</label>
+                    <input type="number" id="aov" name="aov" min="1" placeholder="e.g., 75.00" class="w-full p-3 border border-gray-600 rounded-lg focus:ring-[--primary-color] focus:border-[--primary-color] bg-gray-700 text-white" required>
                 </div>
-                
-                <p class="text-gray-600 mb-6">To receive your full **Provisional Compliance Score**, estimated rate, and a custom **3-Step Mitigation Plan**, please enter your email.</p>
+                <p class="text-gray-400 mb-6">To receive your full **Provisional Compliance Score**, estimated rate, and a custom **3-Step Mitigation Plan**, please enter your contact details.</p>
+                <!-- NEW: First and Last Name Inputs -->
+                <div class="flex space-x-4 mb-6">
+                    <div class="flex-1">
+                        <label for="first_name" class="block text-sm font-medium text-gray-300 mb-2">First Name:</label>
+                        <input type="text" id="first_name" name="first_name" placeholder="John" class="w-full p-3 border border-gray-600 rounded-lg focus:ring-[--primary-color] focus:border-[--primary-color] bg-gray-700 text-white" required>
+                    </div>
+                    <div class="flex-1">
+                        <label for="last_name" class="block text-sm font-medium text-gray-300 mb-2">Last Name:</label>
+                        <input type="text" id="last_name" name="last_name" placeholder="Doe" class="w-full p-3 border border-gray-600 rounded-lg focus:ring-[--primary-color] focus:border-[--primary-color] bg-gray-700 text-white" required>
+                    </div>
+                </div>
+                <!-- Existing Email Input -->
                 <div class="mb-6">
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Work Email Address:</label>
-                    <input type="email" id="email" name="email" placeholder="you@yourbusiness.com" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500" required>
+                    <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Work Email Address:</label>
+                    <input type="email" id="email" name="email" placeholder="you@yourbusiness.com" class="w-full p-3 border border-gray-600 rounded-lg focus:ring-[--primary-color] focus:border-[--primary-color] bg-gray-700 text-white" required>
                 </div>
             </div>
-
-
             <!-- Navigation & Loading -->
             <div id="nav-buttons" class="mt-8 flex justify-between">
-                <button type="button" id="backBtn" class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 font-semibold hover:bg-gray-100 transition duration-200 disabled:opacity-50" disabled>
-                    &larr; Back
+                <button type="button" id="backBtn" class="px-6 py-3 border border-gray-600 rounded-lg text-gray-300 font-semibold hover:bg-gray-700 transition duration-200 disabled:opacity-50" disabled>
+                    Back
                 </button>
                 <button type="button" id="nextBtn" class="px-6 py-3 btn-primary text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition duration-200">
-                    Next &rarr;
+                    Next
                 </button>
                 <button type="submit" id="submitBtn" class="px-6 py-3 btn-primary text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition duration-200 hidden">
                     Calculate My Score
                 </button>
             </div>
-            
             <div id="loadingMessage" class="hidden text-center mt-6">
-                <div class="animate-spin inline-block w-6 h-6 border-4 border-red-500 border-t-transparent rounded-full"></div>
-                <p class="mt-2 text-red-500 font-medium">Analyzing risk profile... Please wait.</p>
+                <div class="animate-spin inline-block w-6 h-6 border-4 border-[--primary-color] border-t-transparent rounded-full"></div>
+                <p class="mt-2 text-[--primary-color] font-medium">Analyzing risk profile... Please wait.</p>
             </div>
         </form>
-
-        <!-- Results Screen (Hidden initially) -->
+        <!-- Results Screen -->
         <div id="resultsScreen" class="hidden text-center p-8">
-            <h3 class="text-3xl font-extrabold text-gray-900 mb-6">Your Risk Assessment is Complete!</h3>
-            
-            <div class="mb-8 p-6 bg-red-50 rounded-xl border border-red-200">
-                <p class="text-xl font-medium text-gray-700">Your Provisional Compliance Score (PCS):</p>
-                <div id="pcsDisplay" class="text-6xl font-black mt-2 inline-block px-6 py-3 rounded-xl shadow-custom text-white bg-red-500">
+            <h3 class="text-3xl font-extrabold text-white mb-6">Your Risk Assessment is Complete!</h3>
+            <!-- PCS Display Block -->
+            <div class="mb-8 p-6 bg-gray-800 rounded-xl border border-[--primary-color]">
+                <p class="text-xl font-medium text-gray-300">Your Provisional Compliance Score (PCS):</p>
+                <div id="pcsDisplay" class="text-6xl font-black mt-2 inline-block px-6 py-3 rounded-xl shadow-custom text-white bg-[--primary-color]">
                     --
                 </div>
-                <p id="riskSummary" class="mt-4 text-red-700 font-semibold"></p>
+                <p id="riskSummary" class="mt-4 font-semibold text-[--primary-color-dark]"></p>
             </div>
-
+            <!-- Mitigation Plan and Rate -->
             <div class="text-left space-y-6">
-                <h4 class="text-2xl font-bold text-gray-800 border-b pb-2">Your Custom Mitigation Plan</h4>
-                
-                <div id="mitigationPlan">
-                    <!-- Mitigation plan will be inserted here by JS -->
+                <h4 class="text-2xl font-bold text-white border-b border-gray-700 pb-2">Your Custom Mitigation Plan</h4>
+                <div id="mitigationPlan" class="space-y-4"></div>
+                <div class="pt-4 border-t border-gray-700 mt-6">
+                    <h4 class="text-xl font-bold text-white mb-2">Estimated Interchange-Plus Rate:</h4>
+                    <p id="rateEstimate" class="text-2xl font-semibold text-[--primary-color-dark]">--</p>
                 </div>
-
-                <div class="pt-4 border-t mt-6">
-                    <h4 class="text-xl font-bold text-gray-800 mb-2">Estimated Interchange-Plus Rate:</h4>
-                    <p id="rateEstimate" class="text-2xl font-semibold text-green-600">--</p>
-                </div>
-
                 <p class="text-sm text-gray-500 mt-6">A full report will be sent to your email with a dedicated risk analyst's findings.</p>
             </div>
         </div>
-
     </div>
-
     <script>
-        // Set the current step and total steps
+        'use strict';
+        // === CONFIGURATION ===
+        // Note: The original Google Apps Script URL is kept here.
+        const CRM_API_URL = 'https://script.google.com/macros/s/AKfycbzKllVWibDihT-UR2KvjLwW_YK0Y3pKoHyKn2m_KcN6EymBeVRCt1yk7_L2dNdG3IbC/exec';
+       
+        // Define theme colors used by JS for results display
+        const THEME_COLORS = {
+            low_risk_bg: '#00BFA5', // Emerald (High Score)
+            low_risk_text: '#1DE9B6',
+            mid_risk_bg: '#F59E0B', // Amber (Medium Score)
+            mid_risk_text: '#D97706',
+            high_risk_bg: '#EF4444', // Red (Low Score)
+            high_risk_text: '#DC2626'
+        };
         let currentStep = 1;
         const totalSteps = 6;
+       
+        // Caching DOM elements
         const form = document.getElementById('riskForm');
         const steps = form.querySelectorAll('.step');
         const nextBtn = document.getElementById('nextBtn');
@@ -232,39 +240,43 @@
         const loadingMessage = document.getElementById('loadingMessage');
         const resultsScreen = document.getElementById('resultsScreen');
         const appContainer = document.getElementById('app-container');
-
-        // --- Core Functions ---
-
-        /**
-         * Generates and updates the progress bar indicators.
-         */
+        const errorMessage = document.getElementById('errorMessage');
+        // === UTILITY FUNCTIONS ===
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.remove('hidden');
+            // Ensure opacity transition happens after display change
+            setTimeout(() => errorMessage.style.opacity = '1', 10);
+        }
+        function hideError() {
+            errorMessage.style.opacity = '0';
+            // Wait for transition to complete before hiding fully
+            setTimeout(() => errorMessage.classList.add('hidden'), 300);
+        }
+       
+        // === CORE FUNCTIONS ===
         function updateProgressBar() {
             const progressBar = document.getElementById('progress-bar');
-            progressBar.innerHTML = ''; // Clear existing indicators
+            progressBar.innerHTML = '';
             for (let i = 1; i <= totalSteps; i++) {
                 const isActive = i <= currentStep;
                 const indicator = document.createElement('div');
-                indicator.className = `step-indicator w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-2 transition-colors duration-300 ${isActive ? 'active' : 'bg-gray-100 text-gray-400 border-gray-300'}`;
+                // The style definition takes care of the colors based on the CSS variables
+                indicator.className = `step-indicator w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-2 transition-colors duration-300 ${isActive ? 'active' : 'bg-gray-600 text-gray-400 border-gray-700'}`;
                 indicator.textContent = i;
                 progressBar.appendChild(indicator);
             }
         }
-
-        /**
-         * Shows the current form step and hides all others.
-         */
         function showStep(stepIndex) {
-            steps.forEach(step => {
-                step.classList.add('hidden');
-            });
+            // Hide all steps first
+            steps.forEach(step => step.classList.add('hidden'));
+           
+            // Show the current step
             const current = form.querySelector(`[data-step="${stepIndex}"]`);
-            if (current) {
-                current.classList.remove('hidden');
-            }
-
-            // Navigation button logic
+            if (current) current.classList.remove('hidden');
+           
+            // Update navigation buttons
             backBtn.disabled = stepIndex === 1;
-            
             if (stepIndex === totalSteps) {
                 nextBtn.classList.add('hidden');
                 submitBtn.classList.remove('hidden');
@@ -272,66 +284,58 @@
                 nextBtn.classList.remove('hidden');
                 submitBtn.classList.add('hidden');
             }
-
+           
+            hideError(); // Clear any previous error on step change
             updateProgressBar();
         }
-
-        /**
-         * Validates the current step before moving next.
-         */
         function validateCurrentStep() {
             const currentStepElement = form.querySelector(`[data-step="${currentStep}"]`);
-            const requiredInputs = currentStepElement.querySelectorAll('input[required], input[type="radio"]');
+            // Check for both required text inputs and radio buttons
+            const requiredInputs = currentStepElement.querySelectorAll('[required]');
+           
             let isValid = true;
-
-            requiredInputs.forEach(input => {
-                // Check radio buttons (only one needs to be checked per group)
-                if (input.type === 'radio') {
-                    const groupName = input.name;
+           
+            // 1. Check specific required inputs (like AOV, First Name, Last Name, and Email in step 6)
+            for (const input of requiredInputs) {
+                if (!input.value) {
+                    isValid = false;
+                    break;
+                }
+            }
+            // 2. Check radio groups (only needed for the radio steps 1-5)
+            if (isValid && currentStep < totalSteps) {
+                const radioGroups = new Set();
+                currentStepElement.querySelectorAll('input[type="radio"]').forEach(radio => radioGroups.add(radio.name));
+               
+                for (const groupName of radioGroups) {
                     if (!form.querySelector(`input[name="${groupName}"]:checked`)) {
                         isValid = false;
+                        break;
                     }
-                } 
-                // Check other required inputs (like email/AOV on step 6)
-                else if (input.hasAttribute('required') && !input.value) {
-                    isValid = false;
                 }
-            });
-
+            }
             if (!isValid) {
-                // Simple visual feedback for missing required fields
-                alert('Please select an option or fill in the required field to continue.');
+                showError('Please select an option or fill in all required fields to continue.');
+            } else {
+                hideError();
             }
             return isValid;
         }
-
-        /**
-         * Moves to the next step.
-         */
         function nextStep() {
             if (validateCurrentStep() && currentStep < totalSteps) {
                 currentStep++;
                 showStep(currentStep);
             }
         }
-
-        /**
-         * Moves to the previous step.
-         */
         function prevStep() {
             if (currentStep > 1) {
                 currentStep--;
                 showStep(currentStep);
             }
         }
-        
-        // --- PCS Calculation Logic ---
-        
-        /**
-         * Calculates the Provisional Compliance Score (PCS) and risk metrics.
-         */
+        // === PCS CALCULATION LOGIC (Updated for New Verticals) ===
         function calculatePCS(formData) {
-            let pcs = 100; // Start at 100 points (low risk)
+            let pcs = 100;
             let riskSummary = "Stable and Optimized (Tier 3)";
             let rateEstimate = "IC + 0.15% + $0.15 (Waived Reserve)";
             let mitigationPlan = [
@@ -339,175 +343,144 @@
                 "Review the Dual Pricing/Cash Discount model to move your effective rate to 0% and maximize savings.",
                 "Consider setting up a **Multi-MID structure** for future scaling and risk diversification."
             ];
-
-            // 1. Vertical Risk (Q1)
+            // Vertical
             switch (formData.get('vertical')) {
-                case 'vape': // Smoke/Vape/CBD
-                    pcs -= 15;
-                    mitigationPlan[0] = "**Goal: Compliance Rigor.** Immediate need for explicit Age Verification and geographic compliance checks.";
+                case 'dispensary': 
+                    pcs -= 20; 
+                    mitigationPlan[0] = "**Goal: Cannabis Compliance Mastery.** Strict adherence to state-specific licensing and federal banking restrictions."; 
                     break;
-                case 'nutra': // Nutraceuticals/Supplements
-                    pcs -= 10;
-                    mitigationPlan[0] = "**Goal: Claims & Dispute Management.** Must review all product claims to meet bank underwriting standards.";
+                case 'cbd_smoke': 
+                    pcs -= 15; 
+                    mitigationPlan[0] = "**Goal: Hemp Product Compliance.** Ensure all CBD products meet the 0.3% THC threshold and labeling requirements."; 
                     break;
-                case 'debt': // Debt Collection/Adult
-                    pcs -= 25;
-                    mitigationPlan[0] = "**Goal: Critical Account Rescue.** Specialized banking is non-negotiable. Requires high-level regulatory expertise.";
+                case 'convenience': 
+                    pcs -= 5; 
+                    mitigationPlan[0] = "**Goal: Retail Optimization.** Focus on inventory turnover and low-dispute transaction monitoring."; 
                     break;
-                case 'subs': // Recurring Subscriptions
-                    pcs -= 5;
+                case 'liquor': 
+                    pcs -= 12; 
+                    mitigationPlan[0] = "**Goal: Alcohol Sales Compliance.** Implement robust age verification and delivery restrictions."; 
+                    break;
+                case 'ecomm': 
+                    // No additional penalty for standard high-risk ecomm
                     break;
             }
-
-            // 2. Volume Risk (Q2)
-            if (formData.get('volume') === '>250k') {
-                pcs -= 10;
-            } else if (formData.get('volume') === '100k-250k') {
-                pcs -= 5;
-            }
-
-            // 3. Subscription % (Q3)
-            if (formData.get('sub_percent') === '>75%') {
-                pcs -= 10;
-            } else if (formData.get('sub_percent') === '50-75%') {
-                pcs -= 5;
-            }
-
-            // 4. ID Verification Status (Q4)
+            // Volume
+            if (formData.get('volume') === '>250k') pcs -= 10;
+            else if (formData.get('volume') === '100k-250k') pcs -= 5;
+            // Subscription
+            if (formData.get('sub_percent') === '>75%') pcs -= 10;
+            else if (formData.get('sub_percent') === '50-75%') pcs -= 5;
+            // ID Check
             if (formData.get('id_check') === 'no') {
-                pcs -= 15; // Major compliance gap
+                pcs -= 15;
                 mitigationPlan.push("MANDATORY: Implement a compliant third-party Age/ID verification layer immediately.");
             }
-
-            // 5. Chargeback Ratio (Q5) - Most influential factor
-            const cbRatio = formData.get('cb_ratio');
-            if (cbRatio === '>1.5%') {
-                pcs -= 30; // Critical Crisis
-            } else if (cbRatio === '1.0%-1.5%') {
-                pcs -= 15; // Warning Zone
-            } else if (cbRatio === '0.5%-0.9%') {
-                pcs -= 5; // Elevated Risk
-            }
-
-            // Cap the PCS score at 100 and ensure it doesn't go below 1 (though logic should keep it non-negative)
+            // Chargeback
+            const cb = formData.get('cb_ratio');
+            if (cb === '>1.5%') pcs -= 30;
+            else if (cb === '1.0%-1.5%') pcs -= 15;
+            else if (cb === '0.5%-0.9%') pcs -= 5;
+            // Clamp PCS between 1 and 100
             pcs = Math.max(1, Math.min(100, pcs));
-
-            // --- Triage Tier Determination & Final Offer ---
-            
             if (pcs < 50) {
                 riskSummary = "CRITICAL RISK (Tier 1) - IMMEDIATE INTERVENTION REQUIRED";
                 rateEstimate = "IC + 0.55% + $0.30 (8% Rolling Reserve)";
-                mitigationPlan.unshift("**CRISIS ALERT:** Your account is at immediate risk of termination or freeze. Stabilization is the priority.");
-                mitigationPlan.push("MANDATORY: Integrate a **Real-Time Dispute Prevention (CDR)** service to stop chargebacks before they hit the bank.");
-
+                mitigationPlan.unshift("**CRISIS ALERT:** Your account is at immediate risk of termination or freeze.");
+                mitigationPlan.push("MANDATORY: Integrate a **Real-Time Dispute Prevention (CDR)** service.");
             } else if (pcs < 75) {
                 riskSummary = "ELEVATED RISK (Tier 2) - VULNERABLE";
                 rateEstimate = "IC + 0.35% + $0.20 (3% Rolling Reserve)";
-                mitigationPlan.unshift("**WARNING:** You have compliance gaps that will lead to higher fees and potential future account instability.");
+                mitigationPlan.unshift("**WARNING:** You have compliance gaps that will lead to higher fees.");
                 mitigationPlan.push("RECOMMENDED: Set up basic fraud velocity filters and enhance your AVS/CVV checks.");
             }
-
             return { pcs, riskSummary, rateEstimate, mitigationPlan };
         }
-        
-        /**
-         * Handles the final form submission, calculates results, and simulates lead capture.
-         */
-        function handleSubmit(event) {
+        // === SUBMIT HANDLER ===
+        async function handleSubmit(event) {
             event.preventDefault();
             if (!validateCurrentStep()) return;
-            
             form.classList.add('hidden');
             loadingMessage.classList.remove('hidden');
-            
             const formData = new FormData(form);
-            const leadEmail = formData.get('email');
-            
-            // 1. Calculate the Results
             const results = calculatePCS(formData);
-
-            // 2. Simulate Lead Capture (replace this with your actual CRM fetch)
-            console.log("--- LEAD CAPTURE DATA (CRM SIMULATION) ---");
-            console.log("Email:", leadEmail);
-            console.log("PCS Score:", results.pcs);
-            console.log("Triage Tier:", results.riskSummary.split(' - ')[0]);
-            console.log("Form Data:", Object.fromEntries(formData));
-
-            // Simulating a network delay for a more realistic user experience
-            setTimeout(() => {
+            // All form data, including first_name and last_name, is collected here
+            const submissionData = {
+                timestamp: new Date().toISOString(),
+                ...Object.fromEntries(formData),
+                pcs_score: results.pcs,
+                risk_tier: results.riskSummary.split(' - ')[0]
+            };
+            console.log('Sending to Google Sheets:', submissionData);
+            try {
+                // Using 'no-cors' mode is required for cross-domain Google Apps Script submission without CORS setup
+                await fetch(CRM_API_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(submissionData)
+                });
+                console.log('Data sent successfully (check Google Sheet)!');
+            } catch (err) {
+                // Catching error is mostly for development logging; the no-cors mode prevents useful error info.
+                console.log('Fetch operation completed (or failed without visible status due to no-cors mode). Proceeding to display results.', err);
+            } finally {
                 loadingMessage.classList.add('hidden');
                 displayResults(results);
-            }, 1500);
-        }
-        
-        /**
-         * Displays the final results screen.
-         */
-        function displayResults(results) {
-            appContainer.classList.add('shadow-custom'); // Add visual emphasis to results card
-            
-            // Set the Risk Summary Color
-            let bgColor = 'bg-green-500';
-            let textColor = 'text-green-700';
-            
-            if (results.pcs < 50) {
-                bgColor = 'bg-red-500';
-                textColor = 'text-red-700';
-            } else if (results.pcs < 75) {
-                bgColor = 'bg-yellow-500';
-                textColor = 'text-yellow-700';
             }
-
+        }
+        function displayResults(results) {
+            // Determine colors based on score using the defined theme colors
+            let bgColor = THEME_COLORS.high_risk_bg;
+            let textColor = THEME_COLORS.high_risk_text;
+            let rateColor = THEME_COLORS.high_risk_text;
+            if (results.pcs >= 75) {
+                bgColor = THEME_COLORS.low_risk_bg;
+                textColor = THEME_COLORS.low_risk_text;
+                rateColor = THEME_COLORS.low_risk_text;
+            } else if (results.pcs >= 50) {
+                bgColor = THEME_COLORS.mid_risk_bg;
+                textColor = THEME_COLORS.mid_risk_text;
+                rateColor = THEME_COLORS.mid_risk_text;
+            }
+            // Update DOM with results
+            // Note: Uses arbitrary value classes [bg-...] and [text-...]
+            appContainer.classList.add('shadow-custom');
+           
             document.getElementById('pcsDisplay').textContent = results.pcs;
-            document.getElementById('pcsDisplay').classList.remove('bg-red-500');
-            document.getElementById('pcsDisplay').classList.add(bgColor);
-            
+            document.getElementById('pcsDisplay').className = `text-6xl font-black mt-2 inline-block px-6 py-3 rounded-xl shadow-custom text-white bg-[${bgColor}]`;
+           
             document.getElementById('riskSummary').textContent = results.riskSummary;
-            document.getElementById('riskSummary').classList.remove('text-red-700');
-            document.getElementById('riskSummary').classList.add(textColor);
-
+            document.getElementById('riskSummary').className = `mt-4 font-semibold text-[${textColor}]`;
+           
             document.getElementById('rateEstimate').textContent = results.rateEstimate;
-            
-            // Build the Mitigation Plan
+            document.getElementById('rateEstimate').className = `text-2xl font-semibold text-[${rateColor}]`;
+            // Populate mitigation plan (adjusting colors for the list bullets)
             const planList = document.getElementById('mitigationPlan');
             planList.innerHTML = '';
-            results.mitigationPlan.forEach((point, index) => {
-                const item = document.createElement('div');
-                item.className = 'flex items-start space-x-3';
-                item.innerHTML = `
-                    <div class="flex-shrink-0 w-6 h-6 bg-red-100 text-red-600 rounded-full flex items-center justify-center font-bold text-xs">${index + 1}</div>
-                    <p class="text-gray-700 flex-1">${point}</p>
-                `;
-                planList.appendChild(item);
+            results.mitigationPlan.forEach((point, i) => {
+                const div = document.createElement('div');
+                div.className = 'flex items-start space-x-3';
+                // Adjusting list item background and text to match the dark theme
+                div.innerHTML = `<div class="flex-shrink-0 w-6 h-6 bg-[${bgColor}/10] text-[${textColor}] rounded-full flex items-center justify-center font-bold text-xs">${i + 1}</div><p class="text-gray-200 flex-1">${point}</p>`;
+                planList.appendChild(div);
             });
-
-
             resultsScreen.classList.remove('hidden');
         }
-
-        // --- Event Listeners and Initialization ---
-
+        // === EVENT LISTENERS ===
         nextBtn.addEventListener('click', nextStep);
         backBtn.addEventListener('click', prevStep);
         form.addEventListener('submit', handleSubmit);
-
-        // Allow navigation using the Enter key (on inputs)
-        form.addEventListener('keypress', function(e) {
+       
+        // Handle 'Enter' key press for navigation
+        form.addEventListener('keypress', e => {
             if (e.key === 'Enter') {
                 e.preventDefault();
-                if (currentStep < totalSteps) {
-                    nextStep();
-                } else if (!submitBtn.classList.contains('hidden')) {
-                    handleSubmit(e);
-                }
+                currentStep < totalSteps ? nextStep() : handleSubmit(e);
             }
         });
-
-        // Initialize the first step and progress bar
-        window.onload = function() {
-            showStep(currentStep);
-        };
+        // Initialize application on load
+        window.onload = () => showStep(currentStep);
     </script>
-
 </body>
 </html>
